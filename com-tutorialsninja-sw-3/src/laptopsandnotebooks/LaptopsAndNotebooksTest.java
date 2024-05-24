@@ -66,33 +66,28 @@ public class LaptopsAndNotebooksTest extends BaseClass {
         driver.findElement(By.id("button-cart")).click();
 
         /*2.7 Verify the message “Success: You have added MacBook to your shopping cart!”*/
-        /*String actualSuccessMsg = driver.findElement(By.xpath("//div[@id='product-product']/div[1]")).getText();
-        String expectedSuccessMsg = "Success: You have added MacBook to your shopping cart!\n" + "x";
-        Assert.assertEquals(expectedSuccessMsg,actualSuccessMsg);*/
+        String actualSuccessMsg = driver.findElement(By.xpath("//div[@class='alert alert-success alert-dismissible']")).getText();
+        System.out.println(actualSuccessMsg);
+        String expectedSuccessMsg = "Success: You have added MacBook to your shopping cart!\n" + "×";
+        Assert.assertEquals(expectedSuccessMsg,actualSuccessMsg);
 
         /*2.8 Click on link “shopping cart” display into success message*/
-        driver.findElement(By.id("button-cart"));
+        driver.findElement(By.xpath("//a[text()='shopping cart']")).click();
 
         /*2.9 Verify the text "Shopping Cart"*/
         String actualCartMsg = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
-        System.out.println(actualCartMsg);
         String expectedCartMsg = "Shopping Cart  (0.00kg)";
         Assert.assertEquals(actualCartMsg,expectedCartMsg);
-        /*String actualMsg = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
-        String expectedMsg = "Shopping Cart  (0.00kg)";
-        Assert.assertTrue(expectedMsg.equalsIgnoreCase(actualMsg));*/
+
 
         /*2.10 Verify the Product name "MacBook"*/
-        /*String actualName = driver.findElement(By.xpath("//*[@id='content']/form/div/table/tbody/tr/td[2]/a")).getText();
+        String actualName = driver.findElement(By.xpath("//*[@id='content']/form/div/table/tbody/tr/td[2]/a")).getText();
         String expectedName = "MacBook ***";
-        Assert.assertEquals(actualName,expectedName);*/
+        Assert.assertEquals(actualName,expectedName);
 
         /*2.11 Change Quantity "2"*/
 
-
-
-
-}
+    }
 @After
     public void closeBrowser(){
        // driver.quit();
