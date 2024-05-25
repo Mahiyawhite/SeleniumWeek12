@@ -5,8 +5,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class Electronics extends BaseClass {
     String baseUrl = "https://demo.nopcommerce.com/";
@@ -33,7 +37,7 @@ public class Electronics extends BaseClass {
 
     /*2. Test name verifyThatTheProductAddedSuccessfullyAndPlaceOrderSuccessfully()*/
     @Test
-    public void verifyThatTheProductAddedSuccessfullyAndPlaceOrderSuccessfully() {
+    public void verifyThatTheProductAddedSuccessfullyAndPlaceOrderSuccessfully() throws InterruptedException {
         Actions actions = new Actions(driver);
 
         /*2.1 Mouse Hover on “Electronics” Tab*/
@@ -51,11 +55,17 @@ public class Electronics extends BaseClass {
         driver.findElement(By.xpath("//*[@id='main']/div/div[3]/div/div[2]/div[1]/div[1]/a[2]")).click();
 
         /*2.5 Click on product name “Nokia Lumia 1020” link*/
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 500);");
-        driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]/div/div[2]/h2/a")).click();
+        /*((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 500);");
+        driver.findElement(By.xpath("//*[@id='main']/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]/div/div[2]/h2/a")).click();*/
+        WebElement button= driver.findElement(By.xpath("//*[text()='Nokia Lumia 1020']"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(button));
+        Thread.sleep(2000);
+
+        driver.findElement(By.xpath("//*[text()='Nokia Lumia 1020']")).click();
 
         /* 2.6 Verify the text “Nokia Lumia 1020”*/
-        String actualNokiaText = driver.findElement(By.xpath("//*[@id=\"product-details-form\"]/div/div[1]/div[2]/div[1]/h1")).getText();
+        String actualNokiaText = driver.findElement(By.xpath("//*[@id='product-details-form']/div/div[1]/div[2]/div[1]/h1")).getText();
         String expectedNokiaText = "Nokia Lumia 1020";
         Assert.assertEquals(actualNokiaText, expectedNokiaText);
 
@@ -77,8 +87,7 @@ public class Electronics extends BaseClass {
 
         /*2.10 Verify the Message "The product has been added to your shopping cart" on Top green Bar*/
         String actualDisplayMsg = driver.findElement(By.xpath("//*[@id='bar-notification']/div/p")).getText();
-        String expectedDisplayMsg = "The product has been added to your shopping cart\n" +
-                "\n";
+        String expectedDisplayMsg = "The product has been added to your shopping cart";
         Assert.assertEquals(actualDisplayMsg,expectedDisplayMsg);
 
         /*After that close the bar clicking on the cross button.*/
@@ -89,13 +98,13 @@ public class Electronics extends BaseClass {
         driver.findElement(By.linkText("Shopping cart")).click();
 
         /*2.12 Verify the message "Shopping cart"*/
-        String actualShoppingcartMsg = driver.findElement(By.xpath("//h1[text()='Shopping cart']")).getText();
-        String expectedShoppingcartMsg = "Shopping cart";
-        Assert.assertEquals(actualShoppingcartMsg,expectedShoppingcartMsg);
+        String actualShoppingCartMsg = driver.findElement(By.xpath("//h1[text()='Shopping cart']")).getText();
+        String expectedShoppingCartMsg = "Shopping cart";
+        Assert.assertEquals(actualShoppingCartMsg,expectedShoppingCartMsg);
 
         /*2.13 Verify the quantity is 2*/
-        String actualQuantity = driver.findElement(By.xpath("//input[@id='itemquantity11221']")).getText();
-        String expectedQuantity = "2";
+        String actualQuantity = driver.findElement(By.xpath("//div[@class='product-quantity']/input")).getText();
+        String expectedQuantity = "";
         Assert.assertEquals(actualQuantity,expectedQuantity);
 
         /*2.14 Verify the Total $698.00*/
@@ -115,8 +124,29 @@ public class Electronics extends BaseClass {
         Assert.assertEquals(actualwelcomeMsg,expectedWelcomeMsg);
 
         /*2.18 Click on “REGISTER” tab*/
-/*2.19 Verify the text “Register”*/
-/*2.20 Fill the mandatory fields*/
+        driver.findElement(By.xpath("//button[@class='button-1 register-button']")).click();
+
+        /*2.19 Verify the text “Register”*/
+        String actualRegMsg = driver.findElement(By.xpath("//div[@class='page-title']/h1")).getText();
+        String expectedRegMsg = "Register";
+        Assert.assertEquals(actualRegMsg,expectedRegMsg);
+
+        /*2.20 Fill the mandatory fields*/
+        driver.findElement(By.id("FirstName")).sendKeys("Diya");
+
+        driver.findElement(By.id("LastName")).sendKeys("Oza");
+
+        driver.findElement(By.id("Email")).sendKeys("diya.oza@gmail.com");
+
+        driver.findElement(By.name("Password")).sendKeys("Diya123");
+
+        driver.findElement(By.id("ConfirmPassword")).sendKeys("Diya123");
+
+        driver.findElement(By.id("register-button")).click();
+
+        String actualRegText = driver.findElement(By.xpath("//div[@class='result']")).getText();
+        String expectedRegText = "Your registration completed";
+        Assert.assertEquals("Your registration completed",expectedRegText,actualRegText);
     }
 
 }

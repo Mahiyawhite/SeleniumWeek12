@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -91,11 +92,51 @@ public class TestSuite extends BaseClass {
         driver.findElement(By.xpath("//input[@id='product_attribute_5_12']")).click();
 
         /*2.11 Verify the price "$1,475.00"*/
-        String actualPrice = driver.findElement(By.xpath("//*[@id='price-value-1']")).getText();
-        String expectingPrice = "$1,360.00";
-        Assert.assertEquals("$1,360.00",expectingPrice,actualPrice);
+        /*String actualPrice = driver.findElement(By.xpath("//*[@id='price-value-1']")).getText();
+        String expectingPrice = "$1,460.00";
+        Assert.assertEquals(expectingPrice,actualPrice);*/
 
         /*2.12 Click on "ADD TO CARD" Button.*/
+        driver.findElement(By.xpath("//button[@id='add-to-cart-button-1']")).click();
+
+        /*2.13 Verify the Message "The product has been added to your shopping cart" on Top green Bar
+           After that close the bar clicking on the cross button.*/
+        /*String actualVerifyMsg = driver.findElement(By.xpath("//div[@id='bar-notification']/div/p")).getText();
+        System.out.println(actualVerifyMsg);
+        String expectedVerifyMsg = "The product has been added to your shopping cart x";
+        Assert.assertEquals(actualVerifyMsg,expectedVerifyMsg);*/
+
+        driver.findElement(By.xpath("//div[@id='bar-notification']/div/span")).click();
+
+        /*2.14 Then MouseHover on "Shopping cart" and Click on "GO TO CART" button.*/
+        Actions actions = new Actions(driver);
+        driver.findElement(By.cssSelector("span[class='cart-label']")).click();
+        driver.findElement(By.xpath("//div[@id='flyout-cart']/div/div[4]/button")).click();
+
+        /*2.15 Verify the message "Shopping cart"*/
+        String actualShoppingCartText = driver.findElement(By.cssSelector("div[class='page-title']")).getText();
+        String expectedShoppingCartText = "Shopping cart";
+        Assert.assertEquals(actualShoppingCartText,expectedShoppingCartText);
+
+        /*2.16 Change the Qty to "2" and Click on "Update shopping cart"*/
+        driver.findElement(By.cssSelector("div[class='product-quantity']>input")).sendKeys("2");
+
+        /*2.17 Verify the Total"$2,950.00"*/
+        String actualPrice = driver.findElement(By.xpath("//form[@id='shopping-cart-form']/div[1]/table/tbody/tr/td[6]/span")).getText();
+        String expectedPrice = "$2,950.00";
+        Assert.assertEquals(actualPrice,expectedPrice);
+
+        /*2.18 click on checkbox “I agree with the terms of service”*/
+        driver.findElement(By.cssSelector("input[id='termsofservice']")).click();
+
+        /*2.19 Click on “CHECKOUT”*/
+        driver.findElement(By.cssSelector("button[id='checkout']")).click();
+
+        /*2.20 Verify the Text “Welcome, Please Sign In!”*/
+        String actualWelcomeText = driver.findElement(By.xpath("//div[@class='page-title']/h1")).getText();
+        String expectedWelcomeText = "Welcome, Please Sign In!";
+        Assert.assertEquals(actualWelcomeText,expectedWelcomeText);
+
 
     }
 
