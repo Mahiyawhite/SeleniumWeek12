@@ -24,26 +24,26 @@ public class LoginTest extends BaseTest {
          Click on ‘LOGIN’ button
          Verify the ‘Accounts Overview’ text is display*/
 
-        /*driver.findElement(By.xpath("//div[@class='login']/input")).sendKeys("Milkybar");
+        driver.findElement(By.xpath("//div[@class='login']/input")).sendKeys("Milkybar");
         driver.findElement(By.xpath("//div[@id='loginPanel']/form/div[2]/input")).sendKeys("Chocolate123");
         driver.findElement(By.xpath("//div[@id='loginPanel']/form/div[3]/input")).click();
 
         String actualAccountText = driver.findElement(By.xpath("//div[@id='showOverview']/h1")).getText();
         String expectedAccountText = "Accounts Overview";
-        Assert.assertEquals(actualAccountText, expectedAccountText);*/
+        Assert.assertEquals(actualAccountText, expectedAccountText);
 
         /*2.verifyTheErrorMessage Enter invalid username
          Enter invalid password
          Click on Login button
          Verify the error message ‘The username and password could not be verified.’*/
 
-        /*driver.findElement(By.xpath("//div[@class='login']/input")).sendKeys("Monkybar");
+        driver.findElement(By.xpath("//div[@class='login']/input")).sendKeys("Monkybar");
         driver.findElement(By.xpath("//div[@id='loginPanel']/form/div[2]/input")).sendKeys("Chocolate1");
         driver.findElement(By.xpath("//div[@id='loginPanel']/form/div[3]/input")).click();
 
         String actualErrorMsg = driver.findElement(By.xpath("//div[@id='rightPanel']/p")).getText();
         String expectedErrorMsg = "The username and password could not be verified.";
-        Assert.assertEquals(actualErrorMsg, expectedErrorMsg);*/
+        Assert.assertEquals(actualErrorMsg, expectedErrorMsg);
 
 
         /*3.userShouldLogOutSuccessfully
